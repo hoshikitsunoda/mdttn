@@ -17,7 +17,7 @@ router.get('/', (req: Request, res: Response) => {
   res.send('Home')
 })
 
-router.get('/login', (req, res) => {
+router.get('/login', (req: Request, res: Response) => {
   const scopes = [
     'user-read-private',
     'user-read-email',
@@ -26,20 +26,34 @@ router.get('/login', (req, res) => {
   ]
   var authorizeURL = spotifyApi.createAuthorizeURL(scopes, 'loggedin')
   res.redirect(authorizeURL)
-
-  // res.redirect(
-  //   'https://accounts.spotify.com/authorize' +
-  //     '?response_type=code' +
-  //     '&client_id=' +
-  //     process.env.CLIENT_ID +
-  //     (scopes ? '&scope=' + encodeURIComponent(scopes) : '') +
-  //     '&redirect_uri=' +
-  //     encodeURIComponent('http://localhost:5000/')
-  // )
 })
 
-router.get('/callback', (req: Request, res: Response) => {
-  res.send('Callback')
+router.get('/callback', async (req: Request, res: Response) => {
+  let code
+  if (req.query && req.query.code) {
+    code = (req.query as any).code
+  }
+  try {
+    var data = await spotifyApi.authorizationCodeGrant(code)
+    const { access_token, refresh_token } = data.body
+    spotifyApi.setAccessToken(access_token)
+    spotifyApi.setRefreshToken(refresh_token)
+
+    res.redirect('http://localhost:5000/')
+  } catch (err) {
+    res.redirect('/#/error/invalid token')
+    console.log(err)
+  }
+})
+
+router.get('/playlists', async (req, res) => {
+  try {
+    var result = await spotifyApi.getUserPlaylists()
+    console.log(result.body)
+    res.status(200).send(result.body)
+  } catch (err) {
+    res.status(400).send(err)
+  }
 })
 
 app.use('/', router)
