@@ -29,7 +29,7 @@ router.get('/login', (req: Request, res: Response) => {
 })
 
 router.get('/callback', async (req: Request, res: Response) => {
-  let code: string
+  let code: string = ''
   if (req.query && req.query.code) {
     code = (req.query as any).code
   }
@@ -39,7 +39,7 @@ router.get('/callback', async (req: Request, res: Response) => {
     spotifyApi.setAccessToken(access_token)
     spotifyApi.setRefreshToken(refresh_token)
 
-    res.redirect('http://localhost:5000/')
+    res.redirect('http://localhost:3000/')
   } catch (err) {
     res.redirect('/#/error/invalid token')
     console.log(err)
