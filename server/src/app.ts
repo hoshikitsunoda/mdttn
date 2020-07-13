@@ -18,23 +18,23 @@ router.get('/', (req: Request, res: Response) => {
 })
 
 router.get('/login', (req: Request, res: Response) => {
-  const scopes = [
+  const scopes: string[] = [
     'user-read-private',
     'user-read-email',
     'playlist-modify-public',
     'playlist-modify-private',
   ]
-  var authorizeURL = spotifyApi.createAuthorizeURL(scopes, 'loggedin')
+  var authorizeURL: string = spotifyApi.createAuthorizeURL(scopes, 'loggedin')
   res.redirect(authorizeURL)
 })
 
 router.get('/callback', async (req: Request, res: Response) => {
-  let code
+  let code: string
   if (req.query && req.query.code) {
     code = (req.query as any).code
   }
   try {
-    var data = await spotifyApi.authorizationCodeGrant(code)
+    const data = await spotifyApi.authorizationCodeGrant(code)
     const { access_token, refresh_token } = data.body
     spotifyApi.setAccessToken(access_token)
     spotifyApi.setRefreshToken(refresh_token)
@@ -46,9 +46,9 @@ router.get('/callback', async (req: Request, res: Response) => {
   }
 })
 
-router.get('/playlists', async (req, res) => {
+router.get('/playlists', async (req: Request, res: Response) => {
   try {
-    var result = await spotifyApi.getUserPlaylists()
+    const result = await spotifyApi.getUserPlaylists()
     console.log(result.body)
     res.status(200).send(result.body)
   } catch (err) {
