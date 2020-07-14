@@ -41,7 +41,7 @@ router.get('/callback', async (req: Request, res: Response) => {
 
     res.redirect('http://localhost:3000/')
   } catch (err) {
-    res.redirect('/#/error/invalid token')
+    res.redirect('http://localhost:3000/error')
     console.log(err)
   }
 })
