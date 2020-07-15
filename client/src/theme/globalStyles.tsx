@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components'
 export const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Nunito|Ropa+Sans&display=swap');
   html {
-    background: linear-gradient(180deg, #576475 0%, #BAC6D6 43.67%, rgba(186, 198, 214, 0) 100%);
+    background-color: #fff;
   }
   
   html * {
