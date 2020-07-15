@@ -2,6 +2,10 @@ import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Nunito|Ropa+Sans&display=swap');
+  * {
+    box-sizing: border-box;
+  }
+  
   html {
     background-color: #fff;
   }

@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Link } from 'react-router-dom'
 import styled from 'styled-components'
 import * as Styled from '../theme/globalStyles'
 
-const header = () => {
+const header: React.FC = () => {
   return (
     <Header>
       <Router>
