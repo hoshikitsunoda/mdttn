@@ -16,7 +16,7 @@ const header: React.FC = () => {
 
 const Header = styled.header`
   ${Styled.flexbox('column', 'center', 'flex-end')}
-  padding: 1rem;
+  padding: 1rem 1rem 4.5rem 1rem;
 `
 
 const LoginButton = styled(Link)`
