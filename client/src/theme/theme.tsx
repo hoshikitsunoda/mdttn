@@ -7,7 +7,7 @@ const size: WindowSize = {
 
 export const theme: Theme = {
   colors: {
-    text: '#fff',
+    text: 'rgba(255,255,255, 0.8)',
     secondaryText: 'rgba(15, 15, 15, 0.8)',
   },
   device: {
