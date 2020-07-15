@@ -1,11 +1,9 @@
 import { createGlobalStyle } from 'styled-components'
 
-import { WindowSize, Theme } from '../models/theme'
-
 export const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Nunito|Ropa+Sans&display=swap');
   html {
-    background-color: #ffffff;
+    background: linear-gradient(180deg, #576475 0%, #BAC6D6 43.67%, rgba(186, 198, 214, 0) 100%);
   }
   
   html * {
@@ -37,22 +35,6 @@ export const GlobalStyle = createGlobalStyle`
   }
 `
 
-const size: WindowSize = {
-  mobile: '350px',
-  laptop: '1024px',
-}
-
-export const theme: Theme = {
-  colors: {
-    text: '#fff',
-    secondaryText: 'rgba(15, 15, 15, 0.8)',
-  },
-  device: {
-    mobile: `(min-width: ${size.mobile})`,
-    laptop: `(min-width: ${size.laptop})`,
-  },
-}
-
 export const flexbox = (
   $direction: string,
   $justify: string,
@@ -65,5 +47,3 @@ export const flexbox = (
     align-items: ${$align};
   `
 }
-
-export default GlobalStyle
