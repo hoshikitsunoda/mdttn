@@ -1,11 +1,14 @@
 import express, { Application, Request, Response, Router } from 'express'
 import * as dotenv from 'dotenv'
 import SpotifyWebApi from 'spotify-web-api-node'
+import cors from 'cors'
 
 dotenv.config()
 
 const app: Application = express()
 const router: Router = express.Router()
+
+app.use(cors())
 
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.CLIENT_ID,
@@ -28,6 +31,13 @@ router.get('/login', (req: Request, res: Response) => {
   res.redirect(authorizeURL)
 })
 
+router.get('/logout', (req: Request, res: Response) => {
+  spotifyApi.resetAccessToken()
+  spotifyApi.resetRefreshToken()
+
+  res.redirect('http://localhost:3000/')
+})
+
 router.get('/callback', async (req: Request, res: Response) => {
   let code: string = ''
   if (req.query && req.query.code) {
@@ -38,8 +48,7 @@ router.get('/callback', async (req: Request, res: Response) => {
     const { access_token, refresh_token } = data.body
     spotifyApi.setAccessToken(access_token)
     spotifyApi.setRefreshToken(refresh_token)
-
-    res.redirect('http://localhost:3000/')
+    res.redirect('http://localhost:3000/' + 'loggedin')
   } catch (err) {
     res.redirect('http://localhost:3000/error')
     console.log(err)
